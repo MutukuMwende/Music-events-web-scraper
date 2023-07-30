@@ -5,6 +5,9 @@ import smtplib
 import ssl
 import os
 
+"INSERT INTO events VALUES ('Tigers', 'Tiger City', '2088.10.14')"
+"SELECT* FROM events WHERE date='2088.10.15'"
+"DELETE FROM events WHERE band='Tigers'"
 
 URL = "https://programmer100.pythonanywhere.com/tours/"
 HEADERS = {
