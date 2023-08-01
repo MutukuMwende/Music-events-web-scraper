@@ -1,8 +1,8 @@
 import time
 import requests
 import selectorlib
-import os
 from datetime import datetime
+import sqlite3
 
 
 URL = "https://programmer100.pythonanywhere.com"
@@ -10,6 +10,8 @@ HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) \
                   AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 \
                   Safari/537.36'}
+
+connection = sqlite3.connect("data_ex.db")
 
 
 def scrape(url):
@@ -26,10 +28,12 @@ def extract(source):
 
 
 def store(extracted_data):
-    with open("data_ex.txt", "a") as file:
-        now = datetime.now()
-        date = now.strftime("%y-%m-%d-%H-%M-%S,")
-        file.write(date + extracted_data + "\n")
+    now = datetime.now()
+    date = now.strftime("%y-%m-%d-%H-%M-%S")
+    row = date, extracted_data
+    cursor = connection.cursor()
+    cursor.execute("INSERT INTO Temperatures VALUES(?,?)", row)
+    connection.commit()
 
 
 if __name__ == "__main__":
